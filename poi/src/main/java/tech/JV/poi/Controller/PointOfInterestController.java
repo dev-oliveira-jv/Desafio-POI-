@@ -1,6 +1,8 @@
 package tech.JV.poi.Controller;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
@@ -39,5 +41,20 @@ public class PointOfInterestController {
         var allPoi = repository.findAll(PageRequest.of(page, pageSize));
 
         return ResponseEntity.ok(allPoi);
+    }
+
+    @PostMapping("/near-me")
+    public ResponseEntity<List<PointOfInterest>> nearMe(@RequestParam("x") Long x,
+                                                        @RequestParam("y") Long y,
+                                                        @RequestParam("dmax") Long dmax){
+        
+        var xMin = x - dmax;
+        var xMax = x + dmax;
+        var yMin = y- dmax;
+        var yMax = y + dmax;
+
+        var body = repository.findNearMe(xMin, xMax, yMax, yMin);
+
+        return ResponseEntity.ok(body);
     }
 }
