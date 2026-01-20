@@ -54,10 +54,15 @@ public class PointOfInterestController {
         var yMax = y + dmax;
 
         var body = repository.findNearMe(xMin, xMax, yMax, yMin)
-                ;
+                .stream()
+                .filter(p -> distanceBetweenPoints(x, y, p.getX(), p.getY()) <= dmax)
+                .toList();
 
         return ResponseEntity.ok(body);
     }
 
+    private Double distanceBetweenPoints(Long x1, Long y1, Long x2, Long y2){
+        return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+    }
 
 }
