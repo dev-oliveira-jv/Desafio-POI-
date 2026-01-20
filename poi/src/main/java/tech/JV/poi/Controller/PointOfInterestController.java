@@ -53,8 +53,11 @@ public class PointOfInterestController {
         var yMin = y- dmax;
         var yMax = y + dmax;
 
-        var body = repository.findNearMe(xMin, xMax, yMax, yMin);
+        var body = repository.findNearMe(xMin, xMax, yMax, yMin)
+                ;
 
         return ResponseEntity.ok(body);
     }
+
+
 }
